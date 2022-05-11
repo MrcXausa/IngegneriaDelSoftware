@@ -1,0 +1,24 @@
+{
+  "name": "progetto_ids",
+  "version": "1.0.0",
+  "description": "progetto ingegneria del software",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrcXausa/IngegneriaDelSoftware.git"
+  },
+  "author": "Marco Xausa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrcXausa/IngegneriaDelSoftware/issues"
+  },
+  "homepage": "https://github.com/MrcXausa/IngegneriaDelSoftware#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.3.3"
+  }
+}
