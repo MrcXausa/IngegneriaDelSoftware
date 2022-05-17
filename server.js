@@ -15,9 +15,12 @@ app.use('/', router);
 //running web server. Database connection still missing (to be added later on)
 //database part hasn't been implemented because i haven't checked it yet
 
+//username:admin
+//psw: Adminsw
+
 //string must be modified with the password 
-var db = mongoose.connect('mongodb+srv://master:master@cluster0.8rtid.mongodb.net/IDS',  {useNewUrlParser: true, useUnifiedTopology: true})  
-    .then ( () => {  
-        console.log("Connected to Database");  
-        app.listen(8080, () => { console.log(`Server listening`) });  
-});
+var db = mongoose.connect('mongodb+srv://admin:Adminsw@ingegneriasw.shvnz.mongodb.net/?retryWrites=true&w=majority'
+).then ( () => console.log("Connected to Database")).catch(()=> console.log("Database connection Error"));
+
+app.listen(8080, () => { console.log(`Server listening`);
+}) 
