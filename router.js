@@ -1,9 +1,6 @@
 const express = require('express')
-const salvaMaf=require('./registrazioneMaf')
 const router = express.Router()
-
-
-
+const salvaMaf = require('./controllers/registrazioneMaf')
 
 // middleware that is specific to this router
 router.use((req, res, next) => {
@@ -11,9 +8,6 @@ router.use((req, res, next) => {
   next()
 })
 
-
-
-router.post('/api/v1/maf', salvaMaf)
-
+router.post('/maf', salvaMaf)
 
 module.exports = router
