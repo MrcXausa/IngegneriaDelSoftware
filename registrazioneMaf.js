@@ -2,15 +2,17 @@ const mongoose =require('mongoose')
 var bodyParser = require('body-parser');
 const { Schema } = mongoose;
 
+app.use(bodyParser.urlencoded());  
+app.use(bodyParser.json());
+
 
 function salvaMaf (req, res) {
-    //prendere dati da risposta
-    //salvarli sul db
+
     var name1=req.query.name
     var surname1=req.query.surname
     var cf1=req.query.cf
     var email1=req.query.email
-    console.log(name1+" "+surname1+" "+cf1+" "+email1)
+    //console.log(name1+" "+surname1+" "+cf1+" "+email1)
   
     const mafSchema= new Schema({
       name:String,
@@ -28,14 +30,19 @@ function salvaMaf (req, res) {
       email:email1
     })
   
-    maf.save(function (err, maf) {
-      if (err) 
-        return console.error(err);
-      console.log( maf.name+ " saved to bookstore collection.");
+    maf.save( (err, maf) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({
+          err:error
+        })
+      }
+        
+      console.log( "\n"+maf.name+ " MAF saved ");
     });
   
 
-    res.location(/* link to the resource */)
+    res.location("/api/v1/maf").send("maf saved")
   }
 
 module.exports = salvaMaf
