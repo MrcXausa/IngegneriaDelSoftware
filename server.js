@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/v1', router);  
+app.use('/api/v1', router);  
 
 //username:admin
 //psw: Adminsw
