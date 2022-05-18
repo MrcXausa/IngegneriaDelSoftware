@@ -1,80 +1,84 @@
-FORMAT: 1A
-HOST: https://polls.apiblueprint.org/
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: "Ingegegneria de software OpenAPI 3.0"
+  description: API del progetto relativo al corso di ingegneria del software.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Localhost
+            
+paths:
+  /maf:
+    post:
+      description: Creates a new maf in the system.
+      summary: Registra un nuovo manager nella piattaforma
+      requestBody:
+        content:
+          application/html:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  description: 'Email address of the student'
+      responses:
+        '201':
+          description: 'User created. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created student.
 
-# MrcXausa 
-
-Polls is a simple API allowing consumers to view polls and vote in them.
-
-## Questions Collection [/questions]
-
-### List All Questions [GET]
-
-+ Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
+          
+#components:
+#  schemas:
+#    Student:
+#      type: object
+#      required:
+#        - id
+#        - email
+#      properties:
+#        id:
+#          type: integer
+#          description: 'ID of the user'
+#        email:
+#          type: string
+#          description: 'Email address of the user'
+#    Book:
+#      type: object
+#      required:
+#        - title
+#        - author
+#        - ISBN
+#        - status
+#      properties:
+#        title:
+#          type: string
+#          description: 'Title of the book'
+#        deadline:
+#          type: string
+#          description: 'Author of the book'
+#        ISBN:
+#          type: string
+#          description: 'ISBN of the book'
+#        status:
+#          type: string
+#          enum: [available, lended]
+#          description: 'Tells whether the book is currently available or not'
+#    Booklending:
+#      type: object
+#      required:
+#      - student
+#      - book
+#      properties:
+#        user:
+#          type: string
+#          description: 'Link to the user'
+#        book:
+#          type: integer
+#          description: 'Link to the book'
