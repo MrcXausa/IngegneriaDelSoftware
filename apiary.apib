@@ -14,20 +14,10 @@ paths:
     post:
       description: Creates a new maf in the system.
       summary: Registra un nuovo manager nella piattaforma
-      requestBody:
-        content:
-          application/html:
-            schema:
-              type: object
-              required:
-                - email
-              properties:
-                email:
-                  type: string
-                  description: 'Email address of the student'
+     
       responses:
         '201':
-          description: 'User created. Link in the Location header'
+          description: 'Maf creato. Locazione della risorse nell header'
           headers:
             'Location':
               schema:
