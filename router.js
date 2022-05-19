@@ -3,7 +3,7 @@ const router = express.Router()
 const salvaMaf = require('./controllers/registrazioneMaf')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./apiary.apib');
+const swaggerDocument = YAML.load('./oas3.yml');
 
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
