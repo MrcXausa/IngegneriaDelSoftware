@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const salvaMaf = require('./controllers/registrazioneMaf')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./apiary.apib');
@@ -13,14 +14,7 @@ router.use((req, res, next) => {
   console.log('Time: ', Date.now())
   next()
 })
-// define the home page route
-router.get('/', (req, res) => {
-  res.send(' prova ')
-})
 
-router.get('/ciao',(req,res)=>(
-    res.send('CIAO!')
-));
-
+router.post('/maf', salvaMaf)
 
 module.exports = router
