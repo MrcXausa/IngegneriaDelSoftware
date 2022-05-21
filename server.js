@@ -13,7 +13,6 @@ initializeApp({
     credential: applicationDefault(),
 });
 
-const app = express();  
 var port = process.env.PORT || 3000;
 
 app.use(cors())
