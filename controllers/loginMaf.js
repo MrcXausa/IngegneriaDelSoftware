@@ -11,8 +11,8 @@ async function loginMaf(req, res) {
         return
     }
     */
-    if(body.user){
-        let dbMaf = await Utente.findOne({email: body.user.email, ruolo: 'manager'}).exec();
+    if(req.user){
+        let dbMaf = await Utente.findOne({email: req.user.email, ruolo: 'manager'}).exec();
         if(dbMaf){//maf riconosciuto
             //dummy response
             res.status(202).json({ success: true, message: 'Login avvenuto con successo'}); 

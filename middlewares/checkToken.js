@@ -7,18 +7,19 @@ const tokenChecker = function(req, res, next) {  // header or url parameters or 
     if (!idToken) 
         res.status(400).json({success: false, message: 'token mancante'})  
 
-    //https://firebase.google.com/docs/auth/admin/verify-id-tokens documentation
+    
     getAuth().verifyIdToken(idToken).then((decodedToken) => {
-        mail=decodedToken.email //DA VERIFICARE il tipo di token
-        let user = await Utente.findOne({email: mail}).exec();
-        if(!user)
-            req.status(401).json({success: false, message: 'Email non riconosciuta'});  
-        else
-            req.user=user
-
-        next();
+        email = decodedToken.email //DA VERIFICARE il tipo di token
+        let user = Utente.findOne({email}, function(err, user) {
+            if(!user)
+                res.status(401).json({success: false, message: 'Email non riconosciuta'});  
+            else
+                req.user = user
+                next();
+        });
     })
-    .catch((error) => {//token non verificato
+    .catch((error) => { //token non verificato
+        console.log(error);
         res.status(500).json({success: false, message: 'Errore nel processo di autenticazione'});  
     });
 };
