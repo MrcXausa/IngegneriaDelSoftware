@@ -4,6 +4,7 @@ const salvaMaf = require('./controllers/registrazioneMaf')
 const loginMaf = require('./controllers/loginMaf')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
+
 const swaggerDocument = YAML.load('./oas3.yml');
 
 router.use('/api-docs', swaggerUi.serve);

@@ -14,7 +14,7 @@ async function loginMaf(req, res) {
     let dbMaf = await Utente.findOne({email: body.email, ruolo: 'manager'}).exec();
     if(dbMaf){//if the email is found
 
-        //reindirizzare il frontend al login
+        
 
     }
     else{//email not fount CHECK CODICE ERRORE
