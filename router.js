@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const salvaMaf = require('./controllers/registrazioneMaf')
+const loginMaf = require('./controllers/loginMaf')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./oas3.yml');
@@ -16,5 +17,6 @@ router.use((req, res, next) => {
 })
 
 router.post('/maf', salvaMaf)
+router.get('/maf',loginMaf)
 
 module.exports = router
