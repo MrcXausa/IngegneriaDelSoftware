@@ -1,25 +1,20 @@
 require('dotenv').config()
 
-const { initializeApp } = require('firebase-admin/app');
+const { initializeApp, applicationDefault } = require('firebase-admin/app');
 const express = require('express');  
 const router = require('./router.js');
 const mongoose = require('mongoose')
 const admin = require('firebase-admin');
-const tokenChecker = require('./middlewares/checkToken');
 
-var serviceAccount = require("C:/Users/marco/Downloads/ingegneria-del-software-mmr-firebase-adminsdk-tvg9v-4dd73368e7.json");
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+initializeApp({
+    credential: applicationDefault(),
 });
-console.log(admin)
-let defaultAuth = getAuth(admin);
 
 const app = express();  
 var port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(tokenChecker)
 app.use('/api/v1', router);  
 
 //username:admin

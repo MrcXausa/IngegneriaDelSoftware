@@ -4,6 +4,7 @@ const salvaMaf = require('./controllers/registrazioneMaf')
 const loginMaf = require('./controllers/loginMaf')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
+const tokenChecker = require('./middlewares/checkToken')
 
 const swaggerDocument = YAML.load('./oas3.yml');
 
@@ -18,6 +19,6 @@ router.use((req, res, next) => {
 })
 
 router.post('/maf', salvaMaf)
-router.get('/maf',loginMaf)
+router.get('/maf', tokenChecker, loginMaf)
 
 module.exports = router
