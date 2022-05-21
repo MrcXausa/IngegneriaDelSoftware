@@ -5,16 +5,11 @@ const tokenChecker = function(req, res, next) {  // header or url parameters or 
     var idToken = req.body.token || req.query.token || req.headers['x-access-token'];  
 
     if (!idToken) 
-        res.status(401).json({success: false, message: 'La risorsa richiesta richiede l\'autenticazione'})  
+        res.status(400).json({success: false, message: 'token mancante'})  
 
     //https://firebase.google.com/docs/auth/admin/verify-id-tokens documentation
     getAuth().verifyIdToken(idToken).then((decodedToken) => {
-        //const uid = decodedToken.uid;
-        //Controllo se la mail nel token è contenuta nel database (corrisponde ad un utente)
-        //se è contenuta allego quell'utente alla risposta
-        //altrimenti ritorno uno stato 401 unauthorized
-
-        mail=decodedToken.email 
+        mail=decodedToken.email //DA VERIFICARE il tipo di token
         let user = await Utente.findOne({email: mail}).exec();
         if(!user)
             req.status(401).json({success: false, message: 'Email non riconosciuta'});  
@@ -24,7 +19,7 @@ const tokenChecker = function(req, res, next) {  // header or url parameters or 
         next();
     })
     .catch((error) => {//token non verificato
-        res.status(403).json({success: false, message: 'Errore nel processo di autenticazione'});  
+        res.status(500).json({success: false, message: 'Errore nel processo di autenticazione'});  
     });
 };
 
