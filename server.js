@@ -3,7 +3,10 @@ require('dotenv').config()
 const { initializeApp, applicationDefault } = require('firebase-admin/app');
 const express = require('express');  
 const router = require('./router.js');
+const app = express();  
 const mongoose = require('mongoose')
+const cors = require('cors')
+
 const admin = require('firebase-admin');
 
 initializeApp({
@@ -13,8 +16,10 @@ initializeApp({
 const app = express();  
 var port = process.env.PORT || 3000;
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use('/api/v1', router);  
 
 //username:admin

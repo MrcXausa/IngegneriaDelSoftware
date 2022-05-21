@@ -1,0 +1,168 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: "Ingegneria del software OpenAPI 3.0"
+  description: API del progetto relativo al corso di ingegneria del software.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Localhost
+            
+paths:
+  /maf:
+    post:
+      description: Registra un nuovo MAF nella piattaforma
+      summary: Registra un nuovo MAF nella piattaforma
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - nome
+                - cognome
+                - codiceFiscale
+                - email
+              properties:
+                nome:
+                  type: string
+                  description: 'Nome del MAF'
+                cognome:
+                  type: string
+                  description: 'Cognome del MAF'
+                codiceFiscale:
+                  type: string
+                  description: 'Codice fiscale del MAF'
+                email:
+                  type: string
+                  description: 'Indirizzo email del MAF, utilizzato per il login'
+      responses:
+        '201':
+          description: 'MAF creato. Locazione della risorsa nel campo self'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '400':
+          description: 'Non sono stati specificati i parametri obbligatori nel corpo della richiesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '409':
+          description: 'È già presente un MAF registrato nel sistema. Non è possibile procedere alla creazione di un ulteriore MAF'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '500':
+          description: 'Errore nel salvataggio dei dati nel database. Il MAF non è stato creato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+  /maf:
+    get:
+      description: esegui il login per il maf alla piattaforma
+      summary: esegui il login per il maf alla piattaforma
+      requestBody:
+        required: true
+        content:
+
+      responses:
+        '202':
+          description: 'MAF loggato.' 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '400':
+          description: 'Token mancante nella richiesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '401':
+          description: 'Mail utente non riconosciuta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '403':
+          description: 'Mail utente riconosciuta, ma non è Manager di Federazione'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '500':
+          description: 'Errore durante il controllo del token'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+    
+    
+    
+components:
+ schemas:
+   RispostaJSON:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+        self:
+          type: string
+   Utente:
+     type: object
+     required:
+       - _id
+       - nome
+       - cognome
+       - codiceFiscale
+       - email
+       - ruolo
+       - stato
+       - sezione
+       - codicePatentino
+       - approvato
+     properties:
+       _id:
+         type: string
+         description: 'Identificativo univoco dell''utente'
+       nome:
+          type: string
+          description: 'Nome'
+       cognome:
+          type: string
+          description: 'Cognome'
+       codiceFiscale:
+          type: string
+          description: 'Codice fiscale'
+       email:
+         type: string
+         description: 'Indirizzo email. Viene utilizzato per il login'
+       ruolo:
+         type: string
+         description: 'Ruolo del''utente. Può essere: manager, arbitro o giocatore'
+         enum:
+         - manager
+         - arbitro
+         - giocatore
+       stato:
+         type: string
+         description: 'Stato dell''utente di tipo giocatore. Può essere: ' # TODO: inserire i valori possibili
+       sezione:
+         type: string
+         description: 'Sezione dell''utente di tipo arbitro'
+       codicePatentino:
+         type: string
+         description: 'Codice patentino dell''utente di tipo arbitro'
+       approvato:
+         type: boolean
+         description: 'Stato di approvazione dell''utente di tipo arbitro'
