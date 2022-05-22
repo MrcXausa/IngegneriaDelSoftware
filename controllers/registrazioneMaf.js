@@ -16,6 +16,18 @@ async function salvaMaf(req, res) {
     return
   }
 
+  // verifico che l'indirizzo email e il codice fiscale non siano già presenti tra gli utenti
+  let dbEmail = await Utente.findOne({email: body.email}).exec();
+  if (dbEmail) {
+    res.status(409).send({success: false, error: 'L\'indirizzo e-mail inserito è già registrato'})
+    return
+  }
+  let dbCodiceFiscale = await Utente.findOne({codiceFiscale: body.codiceFiscale}).exec();
+  if (dbCodiceFiscale) {
+    res.status(409).send({success: false, error: 'Il codice fiscale inserito è già registrato'})
+    return
+  }
+
   // creo il mio document con i dati della richiesta
   const utente = new Utente({
     nome: body.nome,
