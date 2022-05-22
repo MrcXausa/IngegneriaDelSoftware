@@ -1,0 +1,38 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0",
+        "title": "Ingegegneria de software OpenAPI 3.0",
+        "description": "API del progetto relativo al corso di ingegneria del software.",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1",
+            "description": "Localhost"
+        }
+    ],
+    "paths": {
+        "/maf": {
+            "post": {
+                "description": "Creates a new maf in the system.",
+                "summary": "Registra un nuovo manager nella piattaforma",
+                "responses": {
+                    "201": {
+                        "description": "Maf creato. Locazione della risorse nell header",
+                        "headers": {
+                            "Location": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "description": "Link to the newly created student."
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

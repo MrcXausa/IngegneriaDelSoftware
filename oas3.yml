@@ -63,48 +63,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
-  /maf:
-    get:
-      description: esegui il login per il maf alla piattaforma
-      summary: esegui il login per il maf alla piattaforma
-      requestBody:
-        required: true
-        content:
-
-      responses:
-        '202':
-          description: 'MAF loggato.' 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RispostaJSON'
-        '400':
-          description: 'Token mancante nella richiesta'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RispostaJSON'
-        '401':
-          description: 'Mail utente non riconosciuta'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RispostaJSON'
-        '403':
-          description: 'Mail utente riconosciuta, ma non è Manager di Federazione'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RispostaJSON'
-        '500':
-          description: 'Errore durante il controllo del token'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RispostaJSON'
-    
-    
-    
 components:
  schemas:
    RispostaJSON:
@@ -166,3 +124,4 @@ components:
        approvato:
          type: boolean
          description: 'Stato di approvazione dell''utente di tipo arbitro'
+          
