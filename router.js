@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const salvaMaf = require('./controllers/registrazioneMaf')
 const loginMaf = require('./controllers/loginMaf')
+const candidaturaArbitro = require('./controllers/candidaturaArbitro')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const tokenChecker = require('./middlewares/checkToken')
@@ -20,5 +21,6 @@ router.use((req, res, next) => {
 
 router.post('/maf', salvaMaf)
 router.get('/maf', tokenChecker, loginMaf)
+router.post('/arbitro', candidaturaArbitro)
 
 module.exports = router
