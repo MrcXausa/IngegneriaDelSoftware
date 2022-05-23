@@ -5,14 +5,14 @@ const tokenChecker = function(req, res, next) {  // header or url parameters or 
     var idToken = req.body.token || req.query.token || req.headers['x-access-token'];  
 
     if (!idToken) 
-        res.status(400).json({success: false, message: 'token mancante'})  
+        res.status(400).json({success: false, error: 'token mancante'})  
 
     
     getAuth().verifyIdToken(idToken).then((decodedToken) => {
         email = decodedToken.email //DA VERIFICARE il tipo di token
         let user = Utente.findOne({email}, function(err, user) {
             if(!user)
-                res.status(401).json({success: false, message: 'Email non riconosciuta'});  
+                res.status(401).json({success: false, error: 'Email non riconosciuta'});  
             else
                 req.user = user
                 next();
@@ -20,7 +20,7 @@ const tokenChecker = function(req, res, next) {  // header or url parameters or 
     })
     .catch((error) => { //token non verificato
         console.log(error);
-        res.status(500).json({success: false, message: 'Errore nel processo di autenticazione'});  
+        res.status(500).json({success: false, error: 'Errore nel processo di autenticazione'});  
     });
 };
 
