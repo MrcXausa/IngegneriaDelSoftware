@@ -15,7 +15,7 @@ async function loginMaf(req, res) {
         let dbMaf = await Utente.findOne({email: req.user.email, ruolo: 'manager'}).exec();
         if(dbMaf){//maf riconosciuto
             //dummy response
-            res.status(202).json({ success: true, message: 'Login avvenuto con successo'}); 
+            res.status(202).json({ success: true }); 
         }
         else{//email not fount CHECK CODICE ERRORE
             res.status(403).send({success: false, error: 'utente non amministratore'})
