@@ -63,10 +63,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
-  /maf:
     get:
-      description: Esegui il login per il maf alla piattaforma
-      summary: Esegui il login per il maf alla piattaforma
+      description: Esegui il login per il MAF alla piattaforma
+      summary: Esegui il login per il MAF alla piattaforma
 
       responses:
         '202':
@@ -82,13 +81,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
         '401':
-          description: 'Mail utente non riconosciuta'
+          description: 'Indirizzo e-mail utente non riconosciuto'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
         '403':
-          description: 'Mail utente riconosciuta, ma non è Manager di Federazione'
+          description: 'Indirizzo e-mail utente riconosciuto, ma non è Manager di Federazione'
           content:
             application/json:
               schema:
