@@ -52,7 +52,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
         '409':
-          description: 'È già presente un MAF registrato nel sistema. Non è possibile procedere alla creazione di un ulteriore MAF'
+          description: 'È già presente un MAF registrato nel sistema oppure l''indirizzo e-mail o il codice fiscale inseriti sono già presenti nell''elenco degli utenti. Non è possibile procedere alla creazione di un ulteriore MAF'
           content:
             application/json:
               schema:
@@ -65,11 +65,8 @@ paths:
                 $ref: '#/components/schemas/RispostaJSON'
   /maf:
     get:
-      description: esegui il login per il maf alla piattaforma
-      summary: esegui il login per il maf alla piattaforma
-      requestBody:
-        required: true
-        content:
+      description: Esegui il login per il maf alla piattaforma
+      summary: Esegui il login per il maf alla piattaforma
 
       responses:
         '202':
@@ -102,7 +99,67 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
-    
+                
+  /arbitro:
+    post:
+      description: Registra un nuovo arbitro nella piattaforma
+      summary: Registra un nuovo arbitro nella piattaforma
+      
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - nome
+                - cognome
+                - codiceFiscale
+                - email
+              properties:
+                nome:
+                  type: string
+                  description: 'Nome dell''arbitro'
+                cognome:
+                  type: string
+                  description: 'Cognome del''arbitro'
+                codiceFiscale:
+                  type: string
+                  description: 'Codice fiscale del''arbitro'
+                email:
+                  type: string
+                  description: 'Indirizzo email del''arbitro, utilizzato per il login'
+                sezione:
+                  type: string
+                  description: 'Sezione'
+                codicePatentino:
+                  type: string
+                  description: 'Codice patentino'
+      responses:
+        '201':
+          description: 'Arbitro creato. Locazione della risorsa nel campo self'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '400':
+          description: 'Non sono stati specificati i parametri obbligatori nel corpo della richiesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '409':
+          description: 'L''indirizzo e-mail o il codice fiscale inseriti sono già presenti nell''elenco degli utenti. Non è possibile salvare l''arbitro'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '500':
+          description: 'Errore nel salvataggio dei dati nel database. Il MAF non è stato creato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
     
     
 components:
