@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const salvaMaf = require('./controllers/registrazioneMaf')
 const loginMaf = require('./controllers/loginMaf')
+const setupTorneo=require('./controllers/setupTorneo')
 const candidaturaArbitro = require('./controllers/candidaturaArbitro')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
@@ -21,6 +22,7 @@ router.use((req, res, next) => {
 
 router.post('/maf', salvaMaf)
 router.get('/maf', tokenChecker, loginMaf)
-router.post('/arbitro', candidaturaArbitro)
+router.post('/arbitro', candidaturaArbitro) //missing middleware for checking refree login
+router.post('/setuptorneo', setupTorneo)
 
 module.exports = router
