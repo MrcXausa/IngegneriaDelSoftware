@@ -107,6 +107,65 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+  
+  
+  /setuptorneo:
+    post:
+      description: Crea un nuovo torneo con i parametri passati nella richiesta
+      summary: Crea un nuovo torneo con i parametri passati nella richiesta
+      
+      parameters:
+        - in: header
+          name: X-Access-Token
+          description: Token JWT fornito da Firebase (nel frontend è memorizzato in un cookie)
+          schema:
+            type: string
+            format: string
+          required: true
+          
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Torneo'
+      
+      responses:
+        '201':
+            description: 'Torneo creato correttamente.' 
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/RispostaJSON'
+        '400':
+          description: 'Token mancante nella richiesta o campi necessari alla creazione torneo mancanti'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '401':
+          description: 'Indirizzo e-mail utente non riconosciuto'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '403':
+          description: 'Indirizzo e-mail utente riconosciuto, ma non è Manager di Federazione'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '500':
+          description: 'Errore durante il controllo del token o errore durante il salvataggio del torneo'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+          
+      
+            
+            
+      
                 
   /arbitro:
     post:
@@ -172,7 +231,7 @@ paths:
     
 components:
  schemas:
-   RispostaJSON:
+    RispostaJSON:
       type: object
       required:
         - success
@@ -183,55 +242,81 @@ components:
           type: string
         self:
           type: string
-   Utente:
-     type: object
-     required:
-       - _id
-       - nome
-       - cognome
-       - codiceFiscale
-       - email
-       - ruolo
-       - stato
-       - sezione
-       - codicePatentino
-       - approvato
-     properties:
-       _id:
-         type: string
-         description: 'Identificativo univoco dell''utente'
-       nome:
+    Utente:
+      type: object
+      required:
+        - _id
+        - nome
+        - cognome
+        - codiceFiscale
+        - email
+        - ruolo
+        - stato
+        - sezione
+        - codicePatentino
+        - approvato
+      properties:
+        _id:
+          type: string
+          description: 'Identificativo univoco dell''utente'
+        nome:
           type: string
           description: 'Nome'
-       cognome:
+        cognome:
           type: string
           description: 'Cognome'
-       codiceFiscale:
+        codiceFiscale:
           type: string
           description: 'Codice fiscale'
-       email:
-         type: string
-         description: 'Indirizzo email. Viene utilizzato per il login'
-       ruolo:
-         type: string
-         description: 'Ruolo del''utente. Può essere: manager, arbitro o giocatore'
-         enum:
-         - manager
-         - arbitro
-         - giocatore
-       stato:
-         type: string
-         description: 'Stato dell''utente di tipo giocatore'
-         enum:
-         - in_attesa
-         - approvato
-         - sostituito
-       sezione:
-         type: string
-         description: 'Sezione dell''utente di tipo arbitro'
-       codicePatentino:
-         type: string
-         description: 'Codice patentino dell''utente di tipo arbitro'
-       approvato:
-         type: boolean
-         description: 'Stato di approvazione dell''utente di tipo arbitro'
+        email:
+          type: string
+          description: 'Indirizzo email. Viene utilizzato per il login'
+        ruolo:
+          type: string
+          description: 'Ruolo del''utente. Può essere: manager, arbitro o giocatore'
+          enum:
+          - manager
+          - arbitro
+          - giocatore
+        stato:
+          type: string
+          description: 'Stato dell''utente di tipo giocatore'
+          enum:
+          - in_attesa
+          - approvato
+          - sostituito
+        sezione:
+          type: string
+          description: 'Sezione dell''utente di tipo arbitro'
+        codicePatentino:
+          type: string
+          description: 'Codice patentino dell''utente di tipo arbitro'
+        approvato:
+          type: boolean
+          description: 'Stato di approvazione dell''utente di tipo arbitro'
+    Torneo:
+      type: object
+      required:
+        - numero_gironi
+        - numero_squadre
+        - squadre_per_girone
+        - alle_fasi_finali
+      properties:
+        numero_gironi:
+          type: integer
+          description: numero di gironi che compongono il torneo
+          enum:
+          - 4
+          - 8
+        numero_squadre:
+          type: integer
+          description: numero delle squadre che possono partecipare al torneo
+        squadre_per_girone:
+          type: integer
+          description: numero di squadre che compongono ogni girone
+        alle_fase_finali:
+          type: integer
+          description: numero di squadre che per ogni girone accedono alle fasi finali
+          enum:
+          - 1
+          - 2
