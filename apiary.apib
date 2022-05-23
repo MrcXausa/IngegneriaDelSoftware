@@ -221,7 +221,11 @@ components:
          - giocatore
        stato:
          type: string
-         description: 'Stato dell''utente di tipo giocatore. Può essere: ' # TODO: inserire i valori possibili
+         description: 'Stato dell''utente di tipo giocatore'
+         enum:
+         - in_attesa
+         - approvato
+         - sostituito
        sezione:
          type: string
          description: 'Sezione dell''utente di tipo arbitro'
