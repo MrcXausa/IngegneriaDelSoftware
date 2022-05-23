@@ -13,7 +13,6 @@ paths:
   /maf:
     post:
       description: Registra un nuovo MAF nella piattaforma
-      summary: Registra un nuovo MAF nella piattaforma
       requestBody:
         required: true
         content:
@@ -65,7 +64,6 @@ paths:
                 $ref: '#/components/schemas/RispostaJSON'
     get:
       description: Esegui il login per il MAF alla piattaforma
-      summary: Esegui il login per il MAF alla piattaforma
       
       parameters:
         - in: header
@@ -112,7 +110,6 @@ paths:
   /setuptorneo:
     post:
       description: Crea un nuovo torneo con i parametri passati nella richiesta
-      summary: Crea un nuovo torneo con i parametri passati nella richiesta
       
       parameters:
         - in: header
@@ -170,7 +167,6 @@ paths:
   /arbitro:
     post:
       description: Registra un nuovo arbitro nella piattaforma
-      summary: Registra un nuovo arbitro nella piattaforma
       
       requestBody:
         required: true
