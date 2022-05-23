@@ -66,6 +66,15 @@ paths:
     get:
       description: Esegui il login per il MAF alla piattaforma
       summary: Esegui il login per il MAF alla piattaforma
+      
+      parameters:
+        - in: header
+          name: X-Access-Token
+          description: Token JWT fornito da Firebase (nel frontend è memorizzato in un cookie)
+          schema:
+            type: string
+            format: string
+          required: true
 
       responses:
         '202':
