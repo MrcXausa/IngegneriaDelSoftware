@@ -8,7 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const tokenChecker = require('./middlewares/checkToken')
 
-const swaggerDocument = YAML.load('./apiary.apib');
+const swaggerDocument = YAML.load('./oas3.yaml');
 
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
