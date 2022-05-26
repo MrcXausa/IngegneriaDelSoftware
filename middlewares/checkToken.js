@@ -4,8 +4,11 @@ const Utente = require('../models/Utente')
 const tokenChecker = function(req, res, next) {  // header or url parameters or post parameters  
     var idToken = req.body.token || req.query.token || req.headers['x-access-token'];  
 
-    if (!idToken) 
-        res.status(400).json({success: false, error: 'token mancante'})  
+    if (!idToken){
+        res.status(400).json({success: false, error: 'token mancante'})
+        return
+    }
+          
 
     
     getAuth().verifyIdToken(idToken).then((decodedToken) => {
@@ -19,7 +22,6 @@ const tokenChecker = function(req, res, next) {  // header or url parameters or 
         });
     })
     .catch((error) => { //token non verificato
-        console.log(error);
         res.status(500).json({success: false, error: 'Errore nel processo di autenticazione'});  
     });
 };

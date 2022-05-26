@@ -2,7 +2,8 @@ require('dotenv').config()
 
 const { initializeApp, applicationDefault } = require('firebase-admin/app');
 const express = require('express');  
-const router = require('./router.js');
+const routerv1 = require('./routerv1.js');
+const routerv2 = require('./routerv2.js')
 const app = express();  
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -22,6 +23,9 @@ let firebaseauth={
     client_x509_cert_url: process.env.DIECI
 }
 
+admin.initializeApp({
+    credential: admin.credential.cert(firebaseauth)
+});
 
 var port = process.env.PORT || 8080;
 
@@ -29,10 +33,11 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/v1', router);  
+app.use('/api/v1', routerv1);  
+app.use('/api/v2', routerv2);
 
 
-var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(() => {
+var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING_LOCAL).then(() => {
     console.log("Connected to Database"), 
     app.listen(port, () => { console.log(`Server listening`); })
 }).catch(()=> {
