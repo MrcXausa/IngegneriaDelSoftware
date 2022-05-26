@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const privateKeyFirebase  = JSON.parse(process.env.QUATTRO)
 const admin = require('firebase-admin');
-console.log(privateKeyFirebase)
+
 let firebaseauth={
     type: process.env.UNO,
     project_id: process.env.DUE,
