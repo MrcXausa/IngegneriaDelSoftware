@@ -8,8 +8,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const privateKeyFirebase  = JSON.parse(process.env.QUATTRO)
 const admin = require('firebase-admin');
-//console.log(process.env.QUATTRO)
-//console.log(privateKeyFirebase)
+console.log(privateKeyFirebase)
 let firebaseauth={
     type: process.env.UNO,
     project_id: process.env.DUE,
@@ -22,7 +21,7 @@ let firebaseauth={
     auth_provider_x509_cert_url: process.env.NOVE,
     client_x509_cert_url: process.env.DIECI
 }
-//console.log(firebaseauth)
+
 
 var port = process.env.PORT || 8080;
 
@@ -33,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1', router);  
 
 
-var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING_LOCAL).then(() => {
+var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(() => {
     console.log("Connected to Database"), 
     app.listen(port, () => { console.log(`Server listening`); })
 }).catch(()=> {
