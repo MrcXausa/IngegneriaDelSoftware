@@ -134,6 +134,7 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/RispostaJSON'
+                  
         '400':
           description: 'Token mancante nella richiesta o campi necessari alla creazione torneo mancanti'
           content:
@@ -219,6 +220,44 @@ paths:
                 $ref: '#/components/schemas/RispostaJSON'
         '500':
           description: 'Errore nel salvataggio dei dati nel database. Il MAF non è stato creato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+    
+  /avviatorneo:
+    put:
+      decription: Aggiorna lo stato del torneo creato
+      parameters:
+        - in: header
+          name: X-Access-Token
+          description: Token JWT fornito da Firebase (nel frontend è memorizzato in un cookie)
+          schema:
+            type: string
+            format: string
+          required: true
+          
+      responses:
+        '201':
+          description: Stato del torneo aggiornato
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '400':
+          description: token autenticazione mancante
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '406':
+          description: Non esiste un torneo, o esiste ma non è in stato "creato"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '500':
+          description: Errore durante l'aggiornamento dei dati nel database. Torneo non aggiornato
           content:
             application/json:
               schema:
