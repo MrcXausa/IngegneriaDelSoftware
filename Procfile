@@ -1,2 +1,2 @@
-web: node create_firebase_json.js && npm start
+web: npm start
 test: jest

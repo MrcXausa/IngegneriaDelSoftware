@@ -8,10 +8,19 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const admin = require('firebase-admin');
-
-initializeApp({
-    credential: applicationDefault(),
-});
+let firebaseauth={
+    type: process.env.UNO,
+    project_id: process.env.DUE,
+    private_key_id: process.env.TRE,
+    private_key: process.env.QUATTRO,
+    client_email: process.env.CINQUE,
+    client_id: process.env.SEI,
+    auth_uri: process.env.SETTE,
+    token_uri: process.env.OTTO,
+    auth_provider_x509_cert_url: process.env.NOVE,
+    client_x509_cert_url: process.env.DIECI
+}
+initializeApp(firebaseauth);
 
 var port = process.env.PORT || 8080;
 
@@ -23,7 +32,7 @@ app.use('/api/v1', router);
 
 //username:admin
 //psw: Adminsw
-var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(() => {
+var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING_LOCAL).then(() => {
         console.log("Connected to Database"), 
         app.listen(port, () => { console.log(`Server listening`); })
 }).catch(()=> {
