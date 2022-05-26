@@ -37,7 +37,7 @@ app.use('/api/v1', routerv1);
 app.use('/api/v2', routerv2);
 
 
-var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING_LOCAL).then(() => {
+var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(() => {
     console.log("Connected to Database"), 
     app.listen(port, () => { console.log(`Server listening`); })
 }).catch(()=> {
