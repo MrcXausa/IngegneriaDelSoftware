@@ -30,11 +30,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', router);  
 
-//username:admin
-//psw: Adminsw
-var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING_LOCAL).then(() => {
-        console.log("Connected to Database"), 
-        app.listen(port, () => { console.log(`Server listening`); })
+
+var db = mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(() => {
+    console.log("Connected to Database"), 
+    app.listen(port, () => { console.log(`Server listening`); })
 }).catch(()=> {
     console.log("Database connection Error")
 });

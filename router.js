@@ -10,9 +10,9 @@ const tokenChecker = require('./middlewares/checkToken')
 
 const swaggerDocument = YAML.load('./oas3.yaml');
 
+
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
-
 
 // middleware that is specific to this router
 router.use((req, res, next) => {
