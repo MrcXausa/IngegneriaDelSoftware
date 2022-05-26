@@ -10,11 +10,11 @@ async function setupTorneo(req, res) {
 
   // verifico che non esista un torneo
   let dbTorneo = await Torneo.findOne().exec();
-  if(dbTorneo){
+  if(dbTorneo){ //se un torneo esiste già ritorno errore
     res.status(409).send({success: false, error: 'Esiste già un torneo'})
     return
   }
-
+  //altrimenti creo un nuovo torneo con i parametri e lo salvo
   const torneo = new Torneo({
     numero_gironi: body.gironi,
     numero_squadre: body.squadre,

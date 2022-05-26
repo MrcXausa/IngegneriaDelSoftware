@@ -4,9 +4,9 @@ async function avviaTorneo(req, res) {
   const body = req.body;
 
 
-  // verifico che non esista un torneo
-  let dbTorneo = await Torneo.findOne().exec();
-  if(dbTorneo){
+  // verifico che esista un torneo in stato "creato"
+  let dbTorneo = await Torneo.findOne({stato:'creato'}).exec();
+  if(dbTorneo){ //se esiste aggiorno il suo stato
     Torneo.updateOne({},{stato:'attivo'})
     .then(() => {
       res.status(201).send({success: true, self: '/api/v2/torneo'})
@@ -16,7 +16,7 @@ async function avviaTorneo(req, res) {
       res.status(500).send({success: false, error: error.message})
     })
   }
-  else{
+  else{ //se non trovo nulla restituisco errore
     res.status(406).send({success: false, error: 'nessun torneo esistente'})
   }
 }
