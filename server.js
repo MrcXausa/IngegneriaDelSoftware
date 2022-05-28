@@ -7,24 +7,14 @@ const routerv2 = require('./routerv2.js')
 const app = express();  
 const mongoose = require('mongoose')
 const cors = require('cors')
-const privateKeyFirebase  = JSON.parse(process.env.QUATTRO)
+const firebase_key  = process.env.FIREBASE_PRIVATE_KEY
 const admin = require('firebase-admin');
 
-let firebaseauth={
-    type: process.env.UNO,
-    project_id: process.env.DUE,
-    private_key_id: process.env.TRE,
-    private_key: privateKeyFirebase.privatekey,
-    client_email: process.env.CINQUE,
-    client_id: process.env.SEI,
-    auth_uri: process.env.SETTE,
-    token_uri: process.env.OTTO,
-    auth_provider_x509_cert_url: process.env.NOVE,
-    client_x509_cert_url: process.env.DIECI
-}
+let buff = Buffer.from(firebase_key, 'base64');
+let firebase_key_decoded = JSON.parse(buff.toString('ascii'));
 
 admin.initializeApp({
-    credential: admin.credential.cert(firebaseauth)
+    credential: admin.credential.cert(firebase_key_decoded)
 });
 
 var port = process.env.PORT || 8080;
