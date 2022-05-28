@@ -2,6 +2,7 @@ const express = require('express')
 const routerv2 = express.Router()
 const avviaTorneo=require('./controllers/avviaTorneo')
 const tokenChecker = require('./middlewares/checkToken')
+const {getArbitri, approvaArbitro} = require('./controllers/arbitri.js')
 
 // middleware that is specific to this router
 routerv2.use((req, res, next) => {
@@ -10,5 +11,7 @@ routerv2.use((req, res, next) => {
 })
 
 routerv2.put('/avviatorneo',tokenChecker,avviaTorneo);
+routerv2.get('/arbitridaapprovare', tokenChecker, getArbitri);
+routerv2.put('/approvaarbitro/:id', tokenChecker, approvaArbitro);
 
 module.exports = routerv2
