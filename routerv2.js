@@ -4,6 +4,7 @@ const avviaTorneo=require('./controllers/avviaTorneo')
 const tokenChecker = require('./middlewares/checkToken')
 const mostraIscrizioniSquadre=require("./controllers/mostraIscrizioniSquadre")
 const iscrizioneSquadra=require("./controllers/iscrizionesquadra.js")
+const getGiocatore=require("./controllers/getGiocatore")
 
 // middleware that is specific to this router
 routerv2.use((req, res, next) => {
@@ -14,6 +15,7 @@ routerv2.use((req, res, next) => {
 routerv2.put('/avviatorneo',tokenChecker,avviaTorneo);
 routerv2.get("/mostraiscrizionisquadre",mostraIscrizioniSquadre);
 routerv2.put("/iscrizionesquadra",iscrizioneSquadra);
+routerv2.get("/getgiocatore/:id",getGiocatore)
 
 
 module.exports = routerv2
