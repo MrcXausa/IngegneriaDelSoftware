@@ -25,7 +25,7 @@ async function setupTorneo(req, res) {
 
   torneo.save()
   .then(() => {
-    res.status(201).send({success: true, self: '/api/v1/torneo'})
+    res.status(201).location('/api/v1/torneo').send({success: true, self: '/api/v1/torneo'})
   })
   .catch((error) => {
     console.log(error)
