@@ -3,28 +3,39 @@ const Torneo =require("../models/Torneo")
 
 async function iscriviSquadra(req,res){
     body=req.body //body .squadra contiene l'id univoco della squadra da approvare
-    let torneo=Torneo.findOne();
+    squadra=body.squadra
+    let torneo= await Torneo.findOne();
 
     if(!torneo || torneo.stato!="attivo"){
         //sistema risposta
-        res.status(400)
+        res.status(406).send({success: false, error: 'Non c\'è un torneo attivo in questo momento'})
         return
     }
 
-    if(!body.squadra){//se non c'è la squadra nel body
+    if(!squadra){//se non c'è la squadra nel body
         res.status(400).send({success: false, error: 'Squadra non presente nella richiesta'})
         return
     }
 
     //se posso iscrivere ancora squadra
-    if(Squadra.find().count()<torneo.numero_squadre){
-        Squadra.updateOne({_id:body.squadra},{approvata:"true"}); //aggiorno lo stato della squadra
-        res.status(200).send({success: false, self:"/api/v2/squadre" + body.squadra._id })
-        return
+    if(await Squadra.find().count()<torneo.numero_squadre){
+        await Squadra.findByIdAndUpdate(squadra,{approvata:"true"}) //aggiorno lo stato della squadra
+        .then(()=>{ //se è stato aggiornato con successo 
+            res.status(200).send({success: true, self:"/api/v2/squadre" + body.squadra._id })
+        })
+        .catch((error)=>{ //se non è stato aggiornato ritorno errore
+            if(error.name="CastError")
+                res.status(400).send({success: false, error:'' });
+            else
+                res.status(500).send({success: false, error:error });
+        }); 
+       
     }
     else{//se non posso più aggiungere squadre
-
+        res.status(403).send({success: false, error: 'Non è più possibile aggiungere squadre'})
     }
         
     
 }
+
+module.exports=iscriviSquadra;

@@ -16,6 +16,6 @@ const squadraSchema = new Schema({
     collection: 'squadre'
 });
 
-const Squadra = mongoose.model('Squadra', utenteSchema);
+const Squadra = mongoose.model('Squadra',squadraSchema);
 
 module.exports = Squadra

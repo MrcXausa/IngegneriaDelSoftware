@@ -9,6 +9,7 @@ const utenteSchema = new Schema({
   ruolo: String, // manager, giocatore, arbitro
   // giocatore attributes
   stato: String,
+  reti: Number,
   // arbitro attributes
   sezione: String,
   codicePatentino: String,
