@@ -227,7 +227,7 @@ paths:
     
   /avviatorneo:
     put:
-      decription: Aggiorna lo stato del torneo creato
+      description: Aggiorna lo stato del torneo creato
       parameters:
         - in: header
           name: X-Access-Token
@@ -262,6 +262,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+  /arbitri:
+    get:
+      description: Elenco degli arbitri registrati con possibilità di filtrare in base allo stato di approvazione
+      parameters:
+        - name: approvato
+          description: Se visualizzare solo gli arbitri da approvare o quelli già approvati
+          in: query
+          required: false
+      responses:
+        '200':
+          description: 'Elenco degli arbitri inseriti nel sistema'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+  /arbitri/{_id}/approva:
+    put:
+      description: Approva arbitro
+      parameters:
+        - name: _id
+          description: Identificativo dell'arbitro da approvare
+          in: path
+          required: true
+      responses:
+        '403':
+          description: 'L''utente autenticato non è un MAF, pertanto non può procedere all''approvazione'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '200':
+          description: 'Arbitro approvato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
     
     
 components:
@@ -273,6 +309,9 @@ components:
       properties:
         success:
           type: boolean
+        data:
+          type: array
+          additionalProperties: false
         error:
           type: string
         self:
