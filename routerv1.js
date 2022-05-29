@@ -23,7 +23,7 @@ routerv1.use((req, res, next) => {
 
 routerv1.post('/maf', salvaMaf)
 routerv1.get('/maf', tokenChecker, loginMaf)
-routerv1.post('/arbitro', candidaturaArbitro) //missing middleware for checking refree login
+routerv1.post('/arbitro', tokenChecker, candidaturaArbitro) //missing middleware for checking refree login
 routerv1.post('/setuptorneo', tokenChecker,setupTorneo)
 
 module.exports = routerv1
