@@ -14,6 +14,6 @@ routerv2.use((req, res, next) => {
 routerv2.put('/avviatorneo',tokenChecker,avviaTorneo);
 routerv2.get('/arbitri', tokenChecker, getArbitri);
 routerv2.put('/arbitri/:id/approva', tokenChecker, approvaArbitro);
-routerv1.get('/arbitro', tokenChecker, loginArbitro)
+routerv2.get('/arbitro', tokenChecker, loginArbitro)
 
 module.exports = routerv2

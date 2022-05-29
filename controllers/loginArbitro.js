@@ -1,7 +1,7 @@
 const Utente = require('../models/Utente')
 
 
-async function loginMaf(req, res) {
+async function loginArbitro(req, res) {
     const body = req.body;
     
     if(req.user){
@@ -17,4 +17,4 @@ async function loginMaf(req, res) {
     
 }
 
-module.exports = loginMaf
+module.exports = loginArbitro
