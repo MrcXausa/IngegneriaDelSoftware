@@ -1,9 +1,11 @@
 const Utente = require('../models/Utente')
 
 async function getArbitri(req, res) {
-    let filterApprovato = ('approvato' in req.query) ? req.query.approvato : false;
-    let arbitri = await Utente.find({ruolo: 'arbitro', approvato: filterApprovato})
-        .sort({cognome: 'asc'}).exec();
+    let filters = {ruolo: 'arbitro'}
+    if ('approvato' in req.query) {
+        filters.approvato = req.query.approvato
+    }
+    let arbitri = await Utente.find(filters).sort({cognome: 'asc'}).exec();
 
     res.send({success: true, data: arbitri});
 }
