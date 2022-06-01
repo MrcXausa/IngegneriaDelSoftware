@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const Utente =require("./Utente")
 
 const squadraSchema = new Schema({
     nome: String,
-    gicatori:[{ type: Schema.Types.ObjectId, 
-                ref: 'Utente' }],
+    giocatori:[String],
     approvata: Boolean,
     girone: Number,
     punteggio:Number,
