@@ -34,7 +34,7 @@ async function salvaArbitro(req, res) {
 
   utente.save()
   .then(() => {
-    res.status(201).send({success: true, self: '/api/v1/utenti/' + utente._id})
+    res.status(201).location('/api/v1/utenti/' + utente._id).send({success: true, self: '/api/v1/utenti/' + utente._id})
   })
   .catch((error) => {
     console.log(error)
