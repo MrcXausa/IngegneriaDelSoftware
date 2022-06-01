@@ -13,9 +13,9 @@ routerv2.use((req, res, next) => {
 })
 
 routerv2.put('/avviatorneo',tokenChecker,avviaTorneo);
-routerv2.get("/mostraiscrizionisquadre",mostraIscrizioniSquadre);
-routerv2.put("/approvazionesquadra",approvazioneSquadra);
-routerv2.get("/getgiocatore/:id",getGiocatore)
+routerv2.get("/mostraiscrizionisquadre",tokenChecker,mostraIscrizioniSquadre);
+routerv2.put("/approvazionesquadra/:id",tokenChecker,approvazioneSquadra);
+routerv2.get("/giocatore/:id",getGiocatore)
 
 
 module.exports = routerv2
