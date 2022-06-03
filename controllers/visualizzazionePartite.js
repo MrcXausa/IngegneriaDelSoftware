@@ -25,7 +25,7 @@ async function getPartite(req, res){
         }
         res.status(200).json(partite);
     }else{                                      // Se non esistono partite [partita=0]
-        res.status(404).send({success: false, error: 'Non esistono partite'})
+        res.status(406).send({success: false, error: 'Non esistono partite'})
         return
     }
 }
