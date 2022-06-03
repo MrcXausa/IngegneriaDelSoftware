@@ -166,6 +166,49 @@ paths:
       
                 
   /arbitro:
+    get:
+      description: Esegui il login dell'arbitro alla piattaforma
+      
+      parameters:
+        - in: header
+          name: X-Access-Token
+          description: Token JWT fornito da Firebase (nel frontend è memorizzato in un cookie)
+          schema:
+            type: string
+            format: string
+          required: true
+
+      responses:
+        '202':
+          description: 'Arbitro loggato.' 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '400':
+          description: 'Token mancante nella richiesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '401':
+          description: 'Indirizzo e-mail utente non riconosciuto'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '403':
+          description: 'Indirizzo e-mail utente riconosciuto, ma non è arbitro'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '500':
+          description: 'Errore durante il controllo del token'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
     post:
       description: Registra un nuovo arbitro nella piattaforma
       
