@@ -475,7 +475,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RispostaJSON'
+                $ref: '#/components/schemas/Utente'
     
     
 components:
