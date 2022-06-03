@@ -476,6 +476,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Utente'
+                
+  /visualizzapartite:
+    get:
+      description: mostra partite da disputare
+      parameters:
+        - name: id
+          description: Identificativo della squadra di arbitro, squadra casa e ospite da mostrare
+          in: path
+          required: true
+      responses:
+        '400':
+          description: 'Errore nei dati della partita'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '406':
+          description: 'Nessuna partita al momento'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '200':
+          description: 'restituisco le partite'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partita'
     
     
 components:
@@ -572,3 +600,30 @@ components:
           enum:
           - 1
           - 2
+    Partita:
+      type: object
+      required:
+        -casa
+        -ospite
+        -luogo
+        -data
+        -arbitro
+      properties:
+        _id:
+          type: string
+          description: 'Id univoco della partita'
+        casa:
+          type: string
+          description: 'Nome della squadra di casa'
+        ospite: 
+          type: string
+          description: 'Nome della squadra ospite'
+        luogo:
+          type: string
+          description: 'Nome dello stadio o Nome del luogo'
+        data:
+          type: string
+          description: 'Data della partita' 
+        arbitro:
+          type: string
+          description: 'Nome dell arbitro che dirigerà la partita'
