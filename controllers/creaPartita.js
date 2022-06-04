@@ -27,7 +27,7 @@ async function creaPartita(req, res){
     }
     
     //controllare se esiste arbitro (come lo indico nel frontend?)
-    var arbitro=await Utente.find({nome:partita.arbitro.cognome,cognome:partita.arbitro.cognome,codiceFiscale:partita.arbitro.codiceFiscale})
+    var arbitro=await Utente.findOne({nome:partita.arbitro.nome,cognome:partita.arbitro.cognome,codiceFiscale:partita.arbitro.codiceFiscale})
     if(!arbitro){
         res.status(400).send({success: false, error: 'Arbitro non valido'})
         return
@@ -64,6 +64,8 @@ async function creaPartita(req, res){
     var idCasa = casa._id;
     var idOspite = ospite._id;
     var idArbitro= arbitro._id;
+
+    console.log("idarbitro="+idArbitro)
 
     var nuovaPartita = new Partita({
         casa: idCasa,
