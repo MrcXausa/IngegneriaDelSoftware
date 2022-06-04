@@ -603,11 +603,11 @@ components:
     Partita:
       type: object
       required:
-        -casa
-        -ospite
-        -luogo
-        -data
-        -arbitro
+        - casa
+        - ospite
+        - luogo
+        - data
+        - arbitro
       properties:
         _id:
           type: string
