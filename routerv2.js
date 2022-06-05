@@ -8,6 +8,9 @@ const approvazioneSquadra=require("./controllers/approvazioneSquadra.js")
 const getGiocatore=require("./controllers/getGiocatore")
 const visualizzazionePartite=require("./controllers/visualizzazionePartite")
 const loginArbitro = require('./controllers/loginArbitro')
+const inserimentoReferto = require('./controllers/inserimentoReferto')
+const visualizzazioneSquadre = require('./controllers/visualizzazioneSquadre')
+const getSquadra = require("./controllers/getSquadra")
 
 // middleware that is specific to this router
 routerv2.use((req, res, next) => {
@@ -20,8 +23,11 @@ routerv2.get('/arbitri', tokenChecker, getArbitri);
 routerv2.put('/arbitri/:id/approva', tokenChecker, approvaArbitro);
 routerv2.get("/mostraiscrizionisquadre",tokenChecker,mostraIscrizioniSquadre);
 routerv2.put("/approvazionesquadra/:id",tokenChecker,approvazioneSquadra);
-routerv2.get("/giocatore/:id",getGiocatore);
+routerv2.get("/giocatore/:id", getGiocatore);
 routerv2.get("/partite", visualizzazionePartite);
-routerv2.get('/arbitro', tokenChecker, loginArbitro)
+routerv2.get('/arbitro', tokenChecker, loginArbitro);
+routerv2.get('/inserimentoreferti', tokenChecker, inserimentoReferto);
+routerv2.get("/squadra/:id", getSquadra);
+routerv2.get('/squadre', visualizzazioneSquadre);
 
 module.exports = routerv2
