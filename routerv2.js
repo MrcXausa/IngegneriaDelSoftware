@@ -8,7 +8,10 @@ const approvazioneSquadra=require("./controllers/approvazioneSquadra.js")
 const getGiocatore=require("./controllers/getGiocatore")
 const visualizzazionePartite=require("./controllers/visualizzazionePartite")
 const loginArbitro = require('./controllers/loginArbitro')
+const inserimentoReferto = require('./controllers/inserimentoReferto')
 const creaPartita=require("./controllers/creaPartita")
+const visualizzazioneSquadre = require('./controllers/visualizzazioneSquadre')
+const getSquadra = require("./controllers/getSquadra")
 
 // middleware that is specific to this router
 routerv2.use((req, res, next) => {
@@ -25,6 +28,8 @@ routerv2.get("/giocatore/:id",getGiocatore);
 routerv2.get("/partite", visualizzazionePartite);
 routerv2.get('/arbitro', tokenChecker, loginArbitro)
 routerv2.post("/partita",tokenChecker,creaPartita); //needs tokenCheker
-
+routerv2.get('/inserimentoreferti', tokenChecker, inserimentoReferto);
+routerv2.get("/squadra/:id", getSquadra);
+routerv2.get('/squadre', visualizzazioneSquadre);
 
 module.exports = routerv2
