@@ -28,7 +28,7 @@ routerv2.get("/giocatore/:id",getGiocatore);
 routerv2.get("/partite", visualizzazionePartite);
 routerv2.get('/arbitro', tokenChecker, loginArbitro)
 routerv2.post("/partita",tokenChecker,creaPartita); //needs tokenCheker
-routerv2.get('/inserimentoreferti', tokenChecker, inserimentoReferto);
+routerv2.post('/inserimentoreferti', inserimentoReferto);
 routerv2.get("/squadra/:id", getSquadra);
 routerv2.get('/squadre', visualizzazioneSquadre);
 
