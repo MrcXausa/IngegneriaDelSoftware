@@ -8,9 +8,9 @@ async function inserimentoReferto(req, res) {
     
     if(req.user.ruolo == 'arbitro'){
 
-        if(){
+        if(true)
             
-        }    //Controllo info mandate
+            //Controllo info mandate
 
 
         res.status(202).json({ success: true });
