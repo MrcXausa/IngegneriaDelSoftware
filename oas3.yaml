@@ -153,6 +153,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+        '412':
+          description: 'Utente non autorizzato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON' 
         '500':
           description: 'Errore durante il controllo del token o errore durante il salvataggio del torneo'
           content:
@@ -299,6 +305,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+        '412':
+          description: 'Utente non autorizzato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON' 
         '500':
           description: Errore durante l'aggiornamento dei dati nel database. Torneo non aggiornato
           content:
@@ -337,6 +349,37 @@ paths:
                 $ref: '#/components/schemas/RispostaJSON'
         '200':
           description: 'Arbitro approvato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+  /squadra:
+    post:
+      description: Registra una nuova squadra con i suoi giocatori
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+           schema:
+              type: object
+              required:
+                - nome
+                - girone
+                - giocatori
+              properties:
+                nome:
+                  type: string
+                  description: Nome della squadra
+                girone:
+                  type: number
+                  description: Girone in cui la squadra giocherà
+                giocatori:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Utente'
+      responses:
+        '200':
+          description: Squadra inserita correttamente
           content:
             application/json:
               schema:
@@ -413,6 +456,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+        '412':
+          description: 'Utente non autorizzato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON' 
         '500':
           description: 'Errore nel processo di autenticazione'
           content:
@@ -464,6 +513,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+        '412':
+          description: 'Utente non autorizzato'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON' 
         '500':
           description: 'Errore nel processo di autenticazione'
           content:
@@ -477,7 +532,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Utente'
                 
-  /visualizzapartite:
+  /partite:
     get:
       description: mostra partite da disputare
       parameters:
@@ -498,12 +553,67 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+      
         '200':
           description: 'restituisco le partite'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Partita'
+  
+  /partita:
+    post:
+      description: Crea una nuova partita con i parametri passati nella richiesta
+      
+      parameters:
+        - in: header
+          name: X-Access-Token
+          description: Token JWT fornito da Firebase (nel frontend è memorizzato in un cookie)
+          schema:
+            type: string
+            format: string
+          required: true
+          
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partita'
+      
+      responses:
+        '400':
+          description: 'Squadra di casa, o squadra ospite o arbitro non validi'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '403':
+          description: 'Dati mancanti nella richiesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '409':
+          description: 'Conflitto con partita esistente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        
+        '500':
+          description: 'Errore durante il salvataggio della partita'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+      
+        '200':
+          description: 'Partita creata con successo'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
     
     
 components:
@@ -525,16 +635,11 @@ components:
     Utente:
       type: object
       required:
-        - _id
         - nome
         - cognome
         - codiceFiscale
         - email
         - ruolo
-        - stato
-        - sezione
-        - codicePatentino
-        - approvato
       properties:
         _id:
           type: string
@@ -574,6 +679,15 @@ components:
         approvato:
           type: boolean
           description: 'Stato di approvazione dell''utente di tipo arbitro'
+    Giocatore:
+      allOf:
+      - $ref: '#/components/schemas/Utente'
+      - type: object
+        required:
+          - nome
+          - cognome
+          - codiceFiscale
+          - email
     Torneo:
       type: object
       required:
@@ -609,9 +723,6 @@ components:
         - data
         - arbitro
       properties:
-        _id:
-          type: string
-          description: 'Id univoco della partita'
         casa:
           type: string
           description: 'Nome della squadra di casa'
@@ -627,3 +738,23 @@ components:
         arbitro:
           type: string
           description: 'Nome dell arbitro che dirigerà la partita'
+    Referto:
+      type: object
+      required:
+        - partitaRiferimento
+        - goalCasa
+        - goalOspite
+        - marcatori
+      properties:
+        partitaRiferimento:
+          type: string
+          description: 'ID della partita in riferimento'
+        goalCasa:
+          type: integer
+          description: 'Numero goal segnati dalla squadra di casa'
+        goalOspite:
+          type: integer
+          description: 'Numero goal segnati dalla squadra ospite'
+        marcatori:
+          type: array
+          description: 'Lista giocatori che hanno segnato in questa partita'
