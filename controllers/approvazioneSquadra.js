@@ -1,5 +1,6 @@
 const Squadra=require("../models/Squadra")
-const Torneo =require("../models/Torneo")
+const Torneo =require("../models/Torneo");
+const Utente = require("../models/Utente");
 
 async function iscriviSquadra(req,res){
     var squadra=req.params['id']
@@ -19,12 +20,18 @@ async function iscriviSquadra(req,res){
     
         //se posso iscrivere ancora squadra
         if(await Squadra.find().count()<torneo.numero_squadre){
-            await Squadra.findByIdAndUpdate(squadra,{approvata:"true"}) //aggiorno lo stato della squadra
+            console.log(squadra)
+            var team = await Squadra.findByIdAndUpdate(squadra,{approvata:true}) //aggiorno lo stato della squadra
             .then(()=>{ //se è stato aggiornato con successo 
+                
+                for(var i=0; i<team.giocatori.length;i++){
+                     Utente.findByIdAndUpdate(team.giocatori[i],{stato:"approvato"})
+                }
                 res.status(200).send({success: true})
             })
             .catch((error)=>{ //se non è stato aggiornato ritorno errore
                 res.status(500).send({success: false, error:error });
+                console.log("ERRORE")
             }); 
            
         }
