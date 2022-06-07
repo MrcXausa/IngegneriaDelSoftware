@@ -11,7 +11,6 @@ const loginArbitro = require('./controllers/loginArbitro')
 const inserimentoReferto = require('./controllers/inserimentoReferto')
 const creaPartita=require("./controllers/creaPartita")
 const candidaturaSquadra=require('./controllers/candidaturaSquadra')
-const visualizzazioneSquadre = require('./controllers/visualizzazioneSquadre')
 const getSquadra = require("./controllers/getSquadra")
 
 // middleware that is specific to this router
@@ -32,6 +31,5 @@ routerv2.get('/arbitro', tokenChecker, loginArbitro)
 routerv2.post("/partita",tokenChecker,creaPartita); //needs tokenCheker
 routerv2.post('/inserimentoreferti', inserimentoReferto);
 routerv2.get("/squadra/:id", getSquadra);
-routerv2.get('/squadre', visualizzazioneSquadre);
 
 module.exports = routerv2
