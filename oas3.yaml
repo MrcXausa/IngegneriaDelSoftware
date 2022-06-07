@@ -689,6 +689,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+  /squadra/{id}:
+    get:
+      description: Ottieni le informazioni di una squadra dato il suo id
+      parameters:
+        - name: id
+          description: Identificativo della squadra da inviare
+          in: path
+          required: true
+      responses:
+        '406':
+          description: 'Codice squadra non presente nella richiesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '401':
+          description: 'Il codice fornito non appartiene ad una squadra'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '200':
+          description: 'Restituisco la squadra'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
 components:
  schemas:
     RispostaJSON:
