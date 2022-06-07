@@ -427,7 +427,7 @@ paths:
                 $ref: '#/components/schemas/Utente'
                 
                 
-  /approvazionesquadra/{id}:
+  /squadre/{id}/approva:
     put:
       description: approva una squadra al torneo
       parameters:
