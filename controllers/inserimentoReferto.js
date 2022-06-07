@@ -40,23 +40,99 @@ async function inserimentoReferto(req, res) {
         var partitaRif = referto.partitaRiferimento;
         var scCasa= referto.goalCasa;
         var scOspite= referto.goalOspite;
+        const marcat = referto.marcatori;
     
         var nuovoReferto = new Referto({
             _id: idRef,
             partitaRiferimento: partitaRif,
             goalCasa: scCasa,
-            goalOspite: scOspite
+            goalOspite: scOspite,
+            marcatori: marcat
+            
         })
 
-        nuovoReferto.save()
-        .then(()=>{
-            res.status(200).location("/api/v2/referto/"+nuovoReferto._id).send({success: true, self: "/api/v2/referto/"+nuovoReferto._id})
-            return
-        })
+        await nuovoReferto.save()
         .catch(()=>{
             res.status(500).send({success: false, error: "Errore durante il salvataggio del Referto"})
             return
         })
+        
+
+        const sqCasa = match.casa;
+        const sqOspite = match.ospite;
+        const fase = match.fase;
+
+        if(scCasa==scOspite){   //Caso Pareggio
+            try{
+                await Squadra.findByIdAndUpdate(            
+                    sqCasa,{ $inc: {giocate: 1, 
+                                    pareggiate: 1,
+                                    punteggio: 1}
+                            }
+                )
+                await Squadra.findByIdAndUpdate(           
+                    sqOspite,{ $inc: { giocate: 1, 
+                                    pareggiate: 1,
+                                    punteggio: 1} 
+                            }                
+                )
+
+                // Update Gol Giocatore
+                for(i=0;i<marcat.length;i++){ 
+                    await Utente.findByIdAndUpdate( marcat[i],{ $inc: {reti: 1} })
+                }
+                res.status(200).location("/api/v2/referto/"+nuovoReferto._id).send({success: true, self: "/api/v2/referto/"+nuovoReferto._id})       
+            }catch(error) {
+                res.status(500).send({success: false, error:error });
+            }
+        }
+        
+        if(scCasa>scOspite && fase != "tabellone"){  //Caso Casa vincente
+            try{
+                await Squadra.findByIdAndUpdate(            
+                    sqCasa,{ $inc: {giocate: 1,
+                                    vinte: 1,
+                                    punteggio: 3}
+                            }
+                )
+                await Squadra.findByIdAndUpdate(           
+                    sqOspite,{ $inc: { giocate: 1, 
+                                    perse: 1,} 
+                            }                
+                )
+                // Update Gol Giocatore
+                for(i=0;i<marcat.length;i++){ 
+                    await Utente.findByIdAndUpdate( marcat[i],{ $inc: {reti: 1} })
+                    console.log("Giocatore [",marcat[i], "] aggiunto" )
+                }
+                res.status(200).location("/api/v2/referto/"+nuovoReferto._id).send({success: true, self: "/api/v2/referto/"+nuovoReferto._id})              
+            }catch(error) {
+                res.status(500).send({success: false, error:error });
+            }            
+        }
+
+        if(scCasa<scOspite && fase != "tabellone"){  //Caso Ospite vincente
+            try{
+                await Squadra.findByIdAndUpdate(            
+                    sqCasa,{ $inc: {giocate: 1,
+                                    perse: 1}
+                            }
+                )
+                await Squadra.findByIdAndUpdate(           
+                    sqOspite,{ $inc: { giocate: 1, 
+                                    vinte: 1,
+                                    punteggio: 3} 
+                            }                
+                )
+                // Update Gol Giocatore
+                for(i=0;i<marcat.length;i++){ 
+                    await Utente.findByIdAndUpdate( marcat[i],{ $inc: {reti: 1} })
+                }
+                res.status(200).location("/api/v2/referto/"+nuovoReferto._id).send({success: true, self: "/api/v2/referto/"+nuovoReferto._id})           
+            }catch(error) {
+                res.status(500).send({success: false, error:error });
+            }            
+        }            
     }
     else{
         res.status(412).send({success: false, error: 'Utente non autorizzato'})
