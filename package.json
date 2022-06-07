@@ -29,8 +29,13 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "firebase": "^9.8.2",
     "jest": "^28.1.0",
     "node-fetch": "^2.6.7",
     "supertest": "^6.2.3"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true
   }
 }
