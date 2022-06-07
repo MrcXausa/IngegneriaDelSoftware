@@ -384,6 +384,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
+        '400':
+          description: 'Nome squadra o girone non presenti nella richiesta, oppure numero giocatori non valido (deve essere compreso tra 5 e 10)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '409':
+          description: 'Squadra con lo stesso nome già registrata oppure giocatori inseriti già iscritti nella piattaforma o duplicati nella richiesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
   
   /giocatore/{id}:
     get:
