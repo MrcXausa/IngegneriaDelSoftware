@@ -626,8 +626,69 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RispostaJSON'
-    
-    
+                
+  /inserimentoreferti:
+    post:
+      description: 'Inserimento del referto della partita da disputare'
+      parameters:
+        - in: header
+          name: X-Access-Token
+          description: Token JWT fornito da Firebase (nel frontend è memorizzato in un cookie)
+          schema:
+            type: string
+            format: string
+          required: true
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Referto'
+              
+      responses:
+        '400':
+          description: 'Partita non indicata nella richiesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '400':
+          description: 'Referto già esistente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '403':
+          description: 'Dati dei gol segnati mancanti'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '403':
+          description: 'Numero di marcatori totali diverso dai gol totali'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '403':
+          description: 'La partita di tabellone finale non può terminare in pareggio'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '500':
+          description: 'Errore durante il salvataggio del Referto'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
+        '200':
+          description: 'Referto salvato e aggiornati i dati giocatore e squadra correttamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RispostaJSON'
 components:
  schemas:
     RispostaJSON:
