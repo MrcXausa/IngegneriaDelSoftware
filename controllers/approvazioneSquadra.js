@@ -4,7 +4,7 @@ const Utente = require("../models/Utente");
 
 async function iscriviSquadra(req,res){
     var squadra=req.params['id']
-   // if(req.user.ruolo=="manager"){
+    if(req.user.ruolo=="manager"){
         let torneo= await Torneo.findOne(); 
 
         if(!torneo || torneo.stato!="attivo"){
@@ -33,7 +33,11 @@ async function iscriviSquadra(req,res){
         }
         else{//se non posso più aggiungere squadre
             res.status(403).send({success: false, error: 'Non è più possibile aggiungere squadre'})
-        }  
+        }
+    }
+    
+  
+    
 }
 
 module.exports=iscriviSquadra;
